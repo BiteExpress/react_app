@@ -2,7 +2,6 @@ import { Grid, Skeleton, styled, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { btoa } from "next/dist/compiled/@edge-runtime/primitives/encoding";
 import Link from "next/link";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { getModuleId } from "../../helper-functions/getModuleId";
 import { CustomBoxFullWidth } from "../../styled-components/CustomStyles.style";
@@ -115,13 +114,18 @@ const ShopCategoryCard = (props) => {
                     variant="h7"
                     fontWeight="400"
                     className={classes.multiLineEllipsis}
+                    component="h4"
                   >
                     {item?.name}
                   </Typography>
                 </Tooltip>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant="body2" color="customColor.textGray">
+                <Typography
+                  variant="body2"
+                  color="customColor.textGray"
+                  component="span"
+                >
                   {t("Explore Items")}
                 </Typography>
               </Grid>
@@ -134,6 +138,7 @@ const ShopCategoryCard = (props) => {
                   src={imageUrl}
                   borderRadius="5px"
                   objectFit="cover"
+                  loading="loading"
                 />
               </ImageWrapper>
             </Grid>

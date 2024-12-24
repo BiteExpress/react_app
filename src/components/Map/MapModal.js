@@ -129,7 +129,6 @@ const MapModal = ({
         if (fromReceiver !== "1") {
           localStorage.setItem("zoneid", zoneData?.zone_id);
         }
-        // dispatch(setZoneData(zoneData?.data?.zone_data));
       }
       if (!zoneData) {
         setZoneId(undefined);
@@ -168,11 +167,9 @@ const MapModal = ({
   const handleLocationSelection = (value) => {
     setPlaceId(value?.place_id);
     setPlaceDescription(value?.description);
-    //setLoadingAuto(false);
   };
   const handleLocationSet = (values) => {
     setLocation(values);
-    //localStorage.setItem('currentLatLng', JSON.stringify(values))
   };
 
   // get module from localstorage
@@ -249,8 +246,8 @@ const MapModal = ({
           }}
         >
           <IconButton
-            onClick={() => handleClose()}
-            sx={{ position: "absolute", top: 5, right: 8 }}
+            onClick={handleClose}
+            sx={{ position: "absolute", top: 5, right: 8, zIndex: 999 }}
           >
             <CloseIcon sx={{ fontSize: { xs: "18px", md: "24px" } }} />
           </IconButton>
@@ -356,7 +353,6 @@ const MapModal = ({
                 </LocationView>
                 {!!location ? (
                   <GoogleMapComponent
-                    key={rerenderMap}
                     setDisablePickButton={setDisablePickButton}
                     setLocationEnabled={setLocationEnabled}
                     setLocation={handleLocationSet}

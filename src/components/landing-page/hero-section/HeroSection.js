@@ -6,8 +6,9 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { Stack } from "@mui/system";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   CustomBoxFullWidth,
@@ -15,12 +16,10 @@ import {
 } from "styled-components/CustomStyles.style";
 import CustomImageContainer from "../../CustomImageContainer";
 import CustomContainer from "../../container";
-import iconicBg from "../assets/hero_background.png";
+import MobileFrame from "../assets/MobileFrame";
 import HeroLocationForm from "./HeroLocationForm";
 import HeroTitleSection from "./HeroTitleSection";
-import MobileFrame from "../assets/MobileFrame";
-import { Stack } from "@mui/system";
-import { getHeaderImageUrl } from "utils/CustomFunctions";
+import HeroBgSvg from "components/landing-page/HeroBgSvg";
 
 const DynamicModuleSelection = dynamic(() =>
   import("./module-selection/ModuleSelectionRaw")
@@ -57,7 +56,6 @@ const HeroSection = ({ configData, landingPageData, handleOrderNow }) => {
     <CustomContainer>
       <CustomBoxFullWidth
         sx={{
-          backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.2),
           marginTop: calculateTopMargin(),
           borderRadius: "20px",
           position: "relative",
@@ -67,15 +65,11 @@ const HeroSection = ({ configData, landingPageData, handleOrderNow }) => {
           },
         }}
       >
-        <Box sx={{ position: "absolute" }} className="shape">
-          <CustomImageContainer
-            src={iconicBg.src}
-            alt={t("Background")}
-            height="100%"
-            width="100%"
-            borderRadius="20px"
-            objectFit="cover"
-          />
+        <Box
+          sx={{ position: "absolute", pointerEvents: "none" }}
+          className="shape"
+        >
+          <HeroBgSvg />
         </Box>
         <Grid container>
           <Grid

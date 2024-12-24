@@ -47,7 +47,6 @@ import { getLanguage } from "helper-functions/getLanguage";
 import { getModuleId } from "helper-functions/getModuleId";
 import { getGuestId } from "helper-functions/getToken";
 import { ModuleTypes } from "helper-functions/moduleTypes";
-import { getImageUrl, isAvailable } from "utils/CustomFunctions";
 import {
   not_logged_in_message,
   out_of_limits,
@@ -132,13 +131,8 @@ export const CardWrapper = styled(Card)(
         transform: "scale(1.05)",
       },
     },
-    // ".MuiTypography-subtitle1, .name": {
-    //   transition: "all ease 0.5s",
-    // },
-    "&:hover .MuiTypography-subtitle1, &:hover .name": {
-      //color: theme.palette.primary.main,
-      // letterSpacing: "0.02em",
-    },
+
+    "&:hover .MuiTypography-subtitle1, &:hover .name": {},
     [theme.breakpoints.down("sm")]: {
       height:
         horizontalcard !== "true" ? "320px" : cardheight ? "130px" : "150px",
@@ -218,7 +212,6 @@ const ProductCard = (props) => {
     noMargin,
     cardType,
     specialCard,
-    fromStore,
     cardWidth,
     sold,
     stock,
@@ -228,9 +221,7 @@ const ProductCard = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [openModal, setOpenModal] = React.useState(false);
   const [openLocationAlert, setOpenLocationAlert] = useState(false);
-  const { selectedModule } = useSelector((state) => state.utilsData);
   const { configData } = useSelector((state) => state.configData);
-  const [isHover, setIsHover] = useState(false);
   const imageBaseUrl = configData?.base_urls?.item_image_url;
   const router = useRouter();
   const theme = useTheme();
@@ -241,7 +232,6 @@ const ProductCard = (props) => {
   const classes = textWithEllipsis();
   const { t } = useTranslation();
   const p_off = t("%");
-  const off = t("Off");
   const { wishLists } = useSelector((state) => state.wishList);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const { mutate: addFavoriteMutation } = useAddToWishlist();
@@ -456,31 +446,7 @@ const ProductCard = (props) => {
     }
   };
 
-  const quickViewHandleClick = (e) => {
-    // e.stopPropagation();
-    // dispatch({ type: ACTION.setOpenModal, payload: true });
-  };
-  const handleDisableButton = () => {
-    if (getCurrentModuleType() !== "food") {
-      if (item?.stock === 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (
-        !isAvailable(item?.available_time_starts, item?.available_time_ends)
-      ) {
-        if (item?.schedule_order) {
-          return false;
-        } else {
-          return true;
-        }
-      } else {
-        return false;
-      }
-    }
-  };
+  const quickViewHandleClick = () => {};
   const cartUpdateHandleSuccess = (res) => {
     if (res) {
       res?.forEach((item) => {
@@ -644,16 +610,20 @@ const ProductCard = (props) => {
               },
             }}
             className="name"
+            component="h3"
           >
             {item?.name}
           </Typography>
         </PrimaryToolTip>
         <Stack mt="5px">
-          <Typography fontSize="10px">{t("start from")}</Typography>
+          <Typography fontSize="10px" component="h4">
+            {t("start from")}
+          </Typography>
           <Typography
             fontSize={{ xs: "14px", md: "16px" }}
             fontWeight="600"
             color={theme.palette.text.primary}
+            component="h4"
           >
             {getAmountWithSign(item?.price)}
           </Typography>
@@ -710,7 +680,7 @@ const ProductCard = (props) => {
         )}
 
         <PrimaryToolTip text={item?.name} placement="bottom" arrow="false">
-          <H3 text={item?.name} />
+          <H3 text={item?.name} component="h3" />
         </PrimaryToolTip>
         <CustomBoxFullWidth>
           {item?.module_type === "pharmacy" ? (
@@ -719,22 +689,27 @@ const ProductCard = (props) => {
               variant="body2"
               color="text.secondary"
               sx={{ wordBreak: "break-word" }}
+              component="h4"
             >
               {item?.generic_name[0]}
             </Typography>
           ) : (
-            <Body2 text={item?.store_name} />
+            <Body2 text={item?.store_name} component="h4" />
           )}
         </CustomBoxFullWidth>
         {item?.unit_type ? (
           <Typography
-            sx={{ color: (theme) => theme.palette.customColor.textGray }}
+            sx={{
+              color: (theme) => theme.palette.customColor.textGray,
+            }}
           >
             {item?.unit_type}
           </Typography>
         ) : (
           <Typography
-            sx={{ color: (theme) => theme.palette.customColor.textGray }}
+            sx={{
+              color: (theme) => theme.palette.customColor.textGray,
+            }}
           >
             {t("No unit type")}
           </Typography>
@@ -804,16 +779,19 @@ const ProductCard = (props) => {
                 mt: "5px",
               }}
               className="name"
+              component="h3"
             >
               {item?.name}
             </Typography>
           </PrimaryToolTip>
-          <FoodVegNonVegFlag veg={item?.veg === 0 ? "false" : "true"} />
+          {configData?.toggle_veg_non_veg ? (
+            <FoodVegNonVegFlag veg={item?.veg === 0 ? "false" : "true"} />
+          ) : null}
         </CustomStackFullWidth>
         <Typography
-          // mt="10px"
           color="text.secondary"
           variant={isSmall ? "body2" : "body1"}
+          component="h4"
         >
           {item?.store_name}
         </Typography>
@@ -873,11 +851,12 @@ const ProductCard = (props) => {
             variant="body2"
             color="#93A2AE"
             textAlign="center"
+            component="h4"
           >
             {item?.generic_name[0]}
           </Typography>
         ) : (
-          <Body2 text={item?.store_name} />
+          <Body2 text={item?.store_name} component="h4" />
         )}
 
         <PrimaryToolTip text={item?.name} placement="bottom" arrow="false">
@@ -885,6 +864,7 @@ const ProductCard = (props) => {
             className={classes.singleLineEllipsis}
             fontSize={{ xs: "12px", md: "14px" }}
             fontWeight="500"
+            component="h3"
           >
             {item?.name}
           </Typography>
@@ -916,7 +896,7 @@ const ProductCard = (props) => {
       >
         <Body2 text={item?.store_name} />
         <PrimaryToolTip text={item?.name} placement="bottom" arrow="false">
-          <H3 text={item?.name} />
+          <H3 text={item?.name} component="h3" />
         </PrimaryToolTip>
         <CustomStackFullWidth
           justifyContent="center"
@@ -983,9 +963,9 @@ const ProductCard = (props) => {
         spacing={1.5}
         p="1rem"
       >
-        <Body2 text={item?.store_name} />
+        <Body2 text={item?.store_name} component="h4" />
         <PrimaryToolTip text={item?.name} placement="bottom" arrow="false">
-          <H3 text={item?.name} />
+          <H3 text={item?.name} component="h3" />
         </PrimaryToolTip>
         <CustomStackFullWidth
           justifyContent="center"
@@ -1113,6 +1093,7 @@ const ProductCard = (props) => {
           updateLoading={updateLoading}
           setOpenLocationAlert={setOpenLocationAlert}
           noRecommended={noRecommended}
+          configData={configData}
         />
       ) : (
         <CardWrapper
@@ -1126,13 +1107,22 @@ const ProductCard = (props) => {
           pharmaCommon={pharmaCommon}
           onClick={() => handleClick()}
           onMouseEnter={() =>
-            dispatch({ type: ACTION.setIsTransformed, payload: true })
+            dispatch({
+              type: ACTION.setIsTransformed,
+              payload: true,
+            })
           }
           onMouseDown={() =>
-            dispatch({ type: ACTION.setIsTransformed, payload: true })
+            dispatch({
+              type: ACTION.setIsTransformed,
+              payload: true,
+            })
           }
           onMouseLeave={() =>
-            dispatch({ type: ACTION.setIsTransformed, payload: false })
+            dispatch({
+              type: ACTION.setIsTransformed,
+              payload: false,
+            })
           }
         >
           <CustomStackFullWidth
@@ -1159,7 +1149,10 @@ const ProductCard = (props) => {
                   width="100%"
                   alignItems="center"
                   justifyContent="center"
-                  padding={{ xs: "3px 3px 8px 3px", md: "3px 3px 3px 3px" }}
+                  padding={{
+                    xs: "3px 3px 8px 3px",
+                    md: "3px 3px 3px 3px",
+                  }}
                   sx={{
                     position: "absolute",
                     bottom: 0,
@@ -1169,6 +1162,7 @@ const ProductCard = (props) => {
                     fontSize: "12px",
                     zIndex: "999",
                   }}
+                  component="h4"
                 >
                   {item?.store_name}
                 </Stack>

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { HomeComponentsWrapper } from "../HomePageComponents";
+import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { useGetRecommendProductsForHome } from "api-manage/hooks/react-query/useGetRecommendProductsForHome";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import Slider from "react-slick";
+import { setYouWillLoveItems } from "redux/slices/storedData";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import {
   CustomStackFullWidth,
   SliderCustom,
 } from "styled-components/CustomStyles.style";
-import H2 from "../../typographies/H2";
-import { Skeleton, Stack, useMediaQuery, useTheme } from "@mui/material";
 import ProductCard from "../../cards/ProductCard";
-import { useTranslation } from "react-i18next";
 import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
-import Menus from "./Menus";
-import { useDispatch, useSelector } from "react-redux";
-import { setYouWillLoveItems } from "redux/slices/storedData";
-import { useGetRecommendProductsForHome } from "api-manage/hooks/react-query/useGetRecommendProductsForHome";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+import H2 from "../../typographies/H2";
+import { HomeComponentsWrapper } from "../HomePageComponents";
 import { loveItemSettings } from "./loveItemSettings";
+import Menus from "./Menus";
 
 const LoveItem = (props) => {
   const [menu, setMenu] = useState([]);
@@ -30,7 +30,8 @@ const LoveItem = (props) => {
     offset: 1,
     limit: 15,
   };
-  const { data, refetch, isLoading } = useGetRecommendProductsForHome(params);
+  const { data, refetch, isLoading, isFetching } =
+    useGetRecommendProductsForHome(params);
   useEffect(() => {
     refetch();
   }, []);
@@ -100,11 +101,13 @@ const LoveItem = (props) => {
           justifyContent="space-between"
           direction="row"
         >
-          {isLoading ? (
+          {isFetching ? (
             <Skeleton variant="text" width="110px" />
           ) : (
             <>
-              {data?.items?.length > 0 && <H2 text="Item That You’ll Love" />}
+              {data?.items?.length > 0 && (
+                <H2 text="Item That You’ll Love" component="h2" />
+              )}
             </>
           )}
           <Stack maxWidth="960px" width={isSmall ? "initial" : "100%"}>
@@ -122,7 +125,7 @@ const LoveItem = (props) => {
           </Stack>
         </CustomStackFullWidth>
         <CustomStackFullWidth>
-          {isLoading ? (
+          {isFetching ? (
             <SliderCustom nopadding="true">
               <Slider {...loveItemSettings}>
                 {[...Array(5)].map((index) => {
@@ -147,25 +150,6 @@ const LoveItem = (props) => {
               </Slider>
             </SliderCustom>
           )}
-
-          {/*{isLoading ? (*/}
-          {/*  <Grid container spacing={2}>*/}
-          {/*    {[...Array(5)].map((index) => {*/}
-          {/*      return (*/}
-          {/*        <Grid key={index} item xs={6} sm={3} md={2.4}>*/}
-          {/*          <ProductCardSimmer key={index} />*/}
-          {/*        </Grid>*/}
-          {/*      );*/}
-          {/*    })}*/}
-          {/*  </Grid>*/}
-          {/*) : (*/}
-          {/*  <Grid container spacing={2}>*/}
-          {/*    <Grid  item xs={12} sm={12} md={12}>*/}
-          {/*     */}
-          {/*    </Grid>*/}
-
-          {/*  </Grid>*/}
-          {/*)}*/}
         </CustomStackFullWidth>
       </CustomStackFullWidth>
     </HomeComponentsWrapper>

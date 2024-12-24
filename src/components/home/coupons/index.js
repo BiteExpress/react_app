@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
+import { useEffect, useState } from "react";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 
-import Slider from "react-slick";
-import { Box } from "@mui/system";
 import { alpha, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useTranslation } from "react-i18next";
-import couponsBG from "../assets/coupons_bg.png";
-import useGetCoupons from "../../../api-manage/hooks/react-query/useGetCoupons";
-import { getAmountWithSign } from "../../../helper-functions/CardHelpers";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { Box } from "@mui/system";
+import { useTranslation } from "react-i18next";
+import Slider from "react-slick";
+import useGetCoupons from "../../../api-manage/hooks/react-query/useGetCoupons";
+import { getAmountWithSign } from "helper-functions/CardHelpers";
+import couponsBG from "../assets/coupons_bg.png";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   background: alpha(theme.palette.primary.main, 0.3),
@@ -54,15 +54,6 @@ const CouponBox = ({ item }) => {
       .writeText(coupon_code)
       .then(() => {
         setCopied(true);
-        // toast.success(() => (
-        //   <span>
-        //     {t("Code")}
-        //     <b style={{ marginLeft: "4px", marginRight: "4px" }}>
-        //       {coupon_code}
-        //     </b>
-        //     {t("has been copied")}
-        //   </span>
-        // ));
         const timer = setTimeout(() => {
           setCopied(false);
         }, 1000);
@@ -92,6 +83,7 @@ const CouponBox = ({ item }) => {
             fontSize: { xs: "18px", md: "27px" },
             textTransform: "capitalize",
           }}
+          component="h3"
         >
           {item?.discount_type === "percent"
             ? `${get}  ${item?.discount}${discountText}`

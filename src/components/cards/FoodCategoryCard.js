@@ -9,15 +9,13 @@ import {
 import { Box, Stack, styled } from "@mui/system";
 import { btoa } from "next/dist/compiled/@edge-runtime/primitives/encoding";
 import { useRouter } from "next/router";
-import React from "react";
-import { getModuleId } from "../../helper-functions/getModuleId";
+import { getModuleId } from "helper-functions/getModuleId";
 import CustomImageContainer from "../CustomImageContainer";
 
 const FeatureImageBox = styled(Stack)(({ theme }) => ({
   width: "100%",
   paddingTop: "10px",
   borderRadius: "50%",
-  // filter: "drop-shadow(0px 2px 5px rgba(255, 138, 0, 0.3))",
   cursor: "pointer",
 }));
 const FoodCategoryCard = (props) => {
@@ -32,8 +30,6 @@ const FoodCategoryCard = (props) => {
   } = props;
   const theme = useTheme();
   const router = useRouter();
-  const isXSmall = useMediaQuery(theme.breakpoints.down("sm"));
-  const image = categoryImage;
 
   const handleClick = () => {
     router.push({
@@ -83,12 +79,6 @@ const FoodCategoryCard = (props) => {
         >
           <Box
             sx={{
-              // transition: `${theme.transitions.create(
-              // 	["background-color", "transform"],
-              // 	{
-              // 		duration: theme.transitions.duration.standard,
-              // 	}
-              // )}`,
               transition: "all ease 0.5s",
               borderRadius: "50%",
               "&:hover": {
@@ -121,6 +111,7 @@ const FoodCategoryCard = (props) => {
                 smHeight="56px "
                 smMaxWidth="56px"
                 cursor="pointer"
+                loading="loading"
               />
             </Box>
           </Box>
@@ -154,6 +145,7 @@ const FoodCategoryCard = (props) => {
               }}
               fontSize={{ xs: "13px", sm: "14px", md: "16px" }}
               fontWeight="500"
+              component="h4"
             >
               {name}
             </Typography>

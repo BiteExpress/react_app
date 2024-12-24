@@ -1,21 +1,15 @@
-import React from "react";
-import {
-  StyledFooterBackground,
-  StyledFooterTopContainer,
-} from "./Footer.style";
-import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style";
-import FooterBottom from "./FooterBottom";
-import FooterTop from "./footer-top/FooterTop";
-import FooterMiddle from "./footer-middle/FooterMiddle";
 import { useRouter } from "next/router";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import CustomContainer from "../container";
-import { useTheme } from "@emotion/react";
+import { StyledFooterBackground } from "./Footer.style";
+import FooterBottom from "./FooterBottom";
+import FooterMiddle from "./footer-middle/FooterMiddle";
+import FooterTop from "./footer-top/FooterTop";
 
 const FooterComponent = (props) => {
   const { configData, landingPageData } = props;
   const router = useRouter();
   const isLandingPage = router.pathname === "/" ? "true" : "false";
-  const theme = useTheme()
   return (
     <CustomStackFullWidth
       sx={{
@@ -27,9 +21,7 @@ const FooterComponent = (props) => {
       }}
     >
       <FooterTop landingPageData={landingPageData} />
-      <StyledFooterBackground
-        nobottommargin={isLandingPage}
-      >
+      <StyledFooterBackground nobottommargin={isLandingPage}>
         <CustomStackFullWidth
           height="100%"
           alignItems="center"

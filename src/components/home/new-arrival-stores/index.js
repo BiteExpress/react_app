@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
@@ -12,21 +12,19 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 
-import "slick-carousel/slick/slick.css";
-import useGetNewArrivalStores from "../../../api-manage/hooks/react-query/store/useGetNewArrivalStores";
 import { useGetPopularStoreWithoutInfiniteScroll } from "api-manage/hooks/react-query/store/useGetPopularStore";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
-import { getStoresOrRestaurants } from "helper-functions/getStoresOrRestaurants";
 import { ModuleTypes } from "helper-functions/moduleTypes";
 import { setNewArrivalStores } from "redux/slices/storedData";
+import "slick-carousel/slick/slick.css";
+import useGetNewArrivalStores from "../../../api-manage/hooks/react-query/store/useGetNewArrivalStores";
 import CustomImageContainer from "../../CustomImageContainer";
+import SpecialOfferCardShimmer from "../../Shimmer/SpecialOfferCardSimmer";
 import NearbyStoreCard from "../../cards/NearbyStoreCard";
 import ClosedNow from "../../closed-now";
 import { HomeComponentsWrapper } from "../HomePageComponents";
 import Menus from "../best-reviewed-items/Menus";
 import { foodNewArrivalsettings, settings } from "./sliderSettings";
-import SpecialOfferCardShimmer from "../../Shimmer/SpecialOfferCardSimmer";
-import { getImageUrl } from "utils/CustomFunctions";
 
 const ImageWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -71,10 +69,7 @@ const NewArrivalStores = () => {
   });
   const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
   const { configData } = useSelector((state) => state.configData);
-  const store_image_url = `${configData?.base_urls?.store_image_url}`;
   const moduleId = JSON.parse(window.localStorage.getItem("module"))?.id;
-  const newA = t("New Arrival");
-  const title = `${newA} ${getStoresOrRestaurants()}`;
   const queryKey = "navbar-stores";
   const slider = useRef(null);
   const { newArrivalStores } = useSelector((state) => state.storedData);
@@ -170,7 +165,7 @@ const NewArrivalStores = () => {
                 {isLoading ? (
                   <Skeleton variant="text" width="110px" />
                 ) : (
-                  <H2 text={t("New Arrival Restaurants")} />
+                  <H2 text={t("New Arrival Restaurants")} component="h2" />
                 )}
               </CustomStackFullWidth>
               <SliderWrapper
@@ -243,7 +238,7 @@ const NewArrivalStores = () => {
                 {isLoading ? (
                   <Skeleton variant="text" width="110px" />
                 ) : (
-                  <H2 text={t("Best Store Nearby")} />
+                  <H2 text={t("Best Store Nearby")} component="h2" />
                 )}
                 <Menus
                   selectedMenuIndex={selectedMenuIndex}
@@ -264,12 +259,6 @@ const NewArrivalStores = () => {
   return (
     <HomeComponentsWrapper sx={{ paddingTop: "5px", gap: "1rem" }}>
       {getLayout()}
-
-      {/* {true && (
-        <ImageWrapper>
-          <Skeleton variant="circular" height="100%" width="100%" />
-        </ImageWrapper>
-      )} */}
     </HomeComponentsWrapper>
   );
 };

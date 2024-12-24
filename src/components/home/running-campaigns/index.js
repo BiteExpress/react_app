@@ -1,13 +1,13 @@
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGetItemCampaigns from "../../../api-manage/hooks/react-query/useGetItemCampaigns";
-import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
-import { getModuleId } from "../../../helper-functions/getModuleId";
-import { ModuleTypes } from "../../../helper-functions/moduleTypes";
-import { setCampaignItem } from "../../../redux/slices/cart";
-import { setRunningCampaigns } from "../../../redux/slices/storedData";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { getModuleId } from "helper-functions/getModuleId";
+import { ModuleTypes } from "helper-functions/moduleTypes";
+import { setCampaignItem } from "redux/slices/cart";
+import { setRunningCampaigns } from "redux/slices/storedData";
 import FoodDetailModal from "../../food-details/foodDetail-modal/FoodDetailModal";
 import H2 from "../../typographies/H2";
 import { HomeComponentsWrapper } from "../HomePageComponents";
@@ -96,14 +96,14 @@ const RunningCampaigns = () => {
   };
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <SliderShimmer />
       ) : (
         <>
           {runningCampaigns?.length > 0 ? (
             <HomeComponentsWrapper alignItems="flex-start">
               {runningCampaigns?.length > 0 && (
-                <H2 text="Just For You" textAlign="left" />
+                <H2 text="Just For You" textAlign="left" component="h2" />
               )}
               <Box sx={{ width: "100%", mt: "1rem" }}>
                 {getModuleWiseView()}

@@ -19,7 +19,6 @@ import {
 import LogoSide from "../../logo/LogoSide";
 import NavLinks from "./NavLinks";
 import { t } from "i18next";
-import CustomSignInButton from "./CustomSignInButton";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/router";
@@ -42,9 +41,14 @@ import useGetGuest from "../../../api-manage/hooks/react-query/guest/useGetGuest
 import ThemeSwitches from "../top-navbar/ThemeSwitches";
 import CallToAdmin from "../../CallToAdmin";
 import CustomLanguage from "../top-navbar/language/CustomLanguage";
+import { SignInButton } from "components/header/NavBar.style";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
+import dynamic from "next/dynamic";
+const AuthModal = dynamic(() => import("components/auth/AuthModal"));
 const Cart = ({ isLoading }) => {
   const [sideDrawerOpen, setSideDrawerOpen] = useState(false);
+
   const { cartList } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const handleIconClick = () => {
@@ -57,7 +61,11 @@ const Cart = ({ isLoading }) => {
         label={t("Cart")}
         user="false"
         handleClick={handleIconClick}
-        badgeCount={getCartListModuleWise(cartList)?.length}
+        badgeCount={
+          getCartListModuleWise(cartList)?.length > 0
+            ? getCartListModuleWise(cartList).length
+            : null // or use `0` if you want the badge to show as "0"
+        }
       />
       {!!sideDrawerOpen && (
         <CardView
@@ -82,7 +90,7 @@ const WishListSideBar = ({ totalWishList }) => {
         label={t("WishList")}
         user="false"
         handleClick={handleIconClick}
-        badgeCount={totalWishList}
+        badgeCount={totalWishList > 0 ? totalWishList : null}
       />
 
       {!!wishListSideDrawerOpen && (
@@ -143,7 +151,9 @@ const SecondNavBar = ({ configData }) => {
   const { wishLists } = useSelector((state) => state.wishList);
   const [toggled, setToggled] = useState(false);
   const totalWishList = wishLists?.item?.length + wishLists?.store?.length;
+  const [openSignIn, setOpenSignIn] = useState(false);
   const anchorRef = useRef(null);
+  const [modalFor, setModalFor] = useState("sign-in");
   let token = undefined;
   let location = undefined;
   let zoneId = undefined;
@@ -261,6 +271,10 @@ const SecondNavBar = ({ configData }) => {
       pathname: "/track-order",
     });
   };
+  const handleClose = () => {
+    setModalFor("sign-in");
+    setOpenSignIn(false);
+  };
   const getMobileScreenComponents = () => (
     <ModuleWiseNav
       router={router}
@@ -268,6 +282,8 @@ const SecondNavBar = ({ configData }) => {
       token={token}
       setToggled={setToggled}
       location={location}
+      setOpenSignIn={setOpenSignIn}
+      setModalFor={setModalFor}
     />
   );
   const getDesktopScreenComponents = () => (
@@ -275,10 +291,7 @@ const SecondNavBar = ({ configData }) => {
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      //spacing={2}
       sx={{
-        // paddingBottom: isSmall && "10px",
-        // paddingTop: isSmall && "10px",
         marginLeft: "0 !important",
       }}
     >
@@ -393,7 +406,26 @@ const SecondNavBar = ({ configData }) => {
                   />
                 </Stack>
               )}
-              <CustomSignInButton from={router.pathname.replace("/", "")} />
+              <Stack justifyContent="flex-end" alignItems="end">
+                <SignInButton
+                  onClick={() => setOpenSignIn(true)}
+                  variant="contained"
+                >
+                  <CustomStackFullWidth
+                    direction="row"
+                    alignItems="center"
+                    spacing={1}
+                  >
+                    <LockOutlinedIcon
+                      fontSize="small"
+                      style={{ color: theme.palette.whiteContainer.main }}
+                    />
+                    <Typography color={theme.palette.whiteContainer.main}>
+                      {t("Sign In")}
+                    </Typography>
+                  </CustomStackFullWidth>
+                </SignInButton>
+              </Stack>
             </Stack>
           )}
         </CustomStackFullWidth>
@@ -424,6 +456,12 @@ const SecondNavBar = ({ configData }) => {
             />
           </Toolbar>
         </CustomContainer>
+        <AuthModal
+          modalFor={modalFor}
+          setModalFor={setModalFor}
+          open={openSignIn}
+          handleClose={handleClose}
+        />
       </NoSsr>
     </CustomBoxFullWidth>
   );

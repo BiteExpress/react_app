@@ -1,4 +1,3 @@
-import React from "react";
 import {
   alpha,
   Box,
@@ -8,8 +7,8 @@ import {
   useTheme,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import CustomContainer from "../../container";
-import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
 import LargerScreen from "./LargerScreen";
 import SmallerScreen from "./SmallerScreen";
 
@@ -30,15 +29,15 @@ export const CustomButton = styled(Button)(({ theme }) => ({
   maxWidth: "400px",
   background: `linear-gradient(133deg, ${theme.palette.primary.customType1} 0%, ${theme.palette.primary.main} 51.01%)`,
   color: theme.palette.whiteContainer.main,
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down("md")]: {
     padding: "12px 15px",
-    fontSize:"14px",
-    gap:"8px",
+    fontSize: "14px",
+    gap: "8px",
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down("sm")]: {
     padding: "10px",
-    fontSize:"12px",
-    gap:"5px",
+    fontSize: "12px",
+    gap: "5px",
   },
 }));
 
@@ -51,8 +50,8 @@ const AppDownloadSection = ({ configData, landingPageData }) => {
     window.open(s);
   };
   return (
-    <Wrapper>
-      <CustomContainer>
+    <CustomContainer>
+      <Wrapper>
         <CustomStackFullWidth>
           {isSmall ? (
             <SmallerScreen
@@ -69,8 +68,8 @@ const AppDownloadSection = ({ configData, landingPageData }) => {
             />
           )}
         </CustomStackFullWidth>
-      </CustomContainer>
-    </Wrapper>
+      </Wrapper>
+    </CustomContainer>
   );
 };
 

@@ -49,7 +49,10 @@ const ModuleContainer = styled(Box)(({ theme, selected }) => ({
 }));
 
 export const zoneWiseModule = (data) => {
-  const currentZoneIds = JSON.parse(localStorage.getItem("zoneid"));
+  let currentZoneIds = undefined;
+  if (typeof window !== "undefined") {
+    currentZoneIds = JSON.parse(localStorage.getItem("zoneid"));
+  }
   const result = data.filter((moduleItem) => {
     const zoneIds = moduleItem?.zones?.map((zone) => zone.id);
     return currentZoneIds?.some((id) => zoneIds?.includes(id));
@@ -85,14 +88,6 @@ const ModuleSelect = ({
     <Container p=".8rem" spacing={2}>
       {data ? (
         zoneWiseModule?.(data)?.map((item, index) => {
-          // console.log(
-          //   "url",
-          //   getImageUrl(
-          //     item?.storage,
-          //     configData?.base_urls?.module_image_url,
-          //     configData
-          //   )
-          // );
           return (
             <Tooltip
               title={item?.module_name}

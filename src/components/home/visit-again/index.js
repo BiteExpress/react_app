@@ -1,22 +1,21 @@
-import React from "react";
+import { alpha, useTheme } from "@mui/material";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { getToken } from "helper-functions/getToken";
+import { ModuleTypes } from "helper-functions/moduleTypes";
+import Slider from "react-slick";
 import {
   CustomStackFullWidth,
   SliderCustom,
 } from "styled-components/CustomStyles.style";
-import H1 from "../../typographies/H1";
-import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
-import Subtitle1 from "../../typographies/Subtitle1";
-import Slider from "react-slick";
-import { alpha, useTheme } from "@mui/material";
-import VisitAgainCard from "../../cards/VisitAgainCard";
-import { settings } from "./SliderSettings";
 import { IsSmallScreen } from "utils/CommonValues";
+import VisitAgainCard from "../../cards/VisitAgainCard";
 import CustomContainer from "../../container";
-import { ModuleTypes } from "helper-functions/moduleTypes";
-import { getToken } from "helper-functions/getToken";
+import H1 from "../../typographies/H1";
+import Subtitle1 from "../../typographies/Subtitle1";
+import { settings } from "./SliderSettings";
 
 const VisitAgain = (props) => {
-  const { configData, visitedStores, isVisited } = props;
+  const { configData, visitedStores, isVisited, isFetching } = props;
   const theme = useTheme();
   const token = getToken();
   const getModuleWiseData = () => {
@@ -84,20 +83,24 @@ const VisitAgain = (props) => {
                 mt="10px"
                 spacing={1}
               >
-                <H1 text={getModuleWiseData?.()?.heading} />
+                <H1 text={getModuleWiseData?.()?.heading} component="h2" />
                 {isVisited && (
                   <Subtitle1
                     textAlign={getModuleWiseData?.()?.mainPosition}
                     text={getModuleWiseData?.()?.subHeading}
+                    component="p"
                   />
                 )}
               </CustomStackFullWidth>
             </CustomContainer>
           ) : (
             <>
-              <H1 text={getModuleWiseData?.()?.heading} />
+              <H1 text={getModuleWiseData?.()?.heading} component="h2" />
               {isVisited && (
-                <Subtitle1 text={getModuleWiseData?.()?.subHeading} />
+                <Subtitle1
+                  text={getModuleWiseData?.()?.subHeading}
+                  component="p"
+                />
               )}
             </>
           )}

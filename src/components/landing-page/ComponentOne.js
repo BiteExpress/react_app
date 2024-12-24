@@ -9,12 +9,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useRouter } from "next/router";
-import React from "react";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
-} from "../../styled-components/CustomStyles.style";
-import { IsSmallScreen } from "../../utils/CommonValues";
+} from "styled-components/CustomStyles.style";
+import { IsSmallScreen } from "utils/CommonValues";
 import CustomContainer from "../container";
 import DollarSignHighlighter from "../DollarSignHighlighter";
 import DeliveryImage from "./svg-components/deliveryImage";
@@ -52,14 +51,13 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
           sx={{
             position: "relative",
             marginTop: "1rem",
-            marginBottom: ".2rem",
+            marginBottom: ".1rem",
           }}
         >
           <Grid
             container
             alignItems="center"
             justifyContent="space-between"
-            spacing={{ xs: 1, md: 4 }}
             flexDirection={{ xs: "column-reverse", md: "row" }}
           >
             <Grid item xs={12} sm={12} md={6}>
@@ -71,6 +69,7 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
                   <Typography
                     variant={isSmall ? "h6" : "h4"}
                     color="primary.main"
+                    component="h2"
                   >
                     <DollarSignHighlighter
                       theme={theme}
@@ -80,6 +79,7 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
                   <Typography
                     variant={isSmall ? "h6" : "h4"}
                     sx={{ opacity: ".9" }}
+                    component="h3"
                   >
                     <DollarSignHighlighter
                       theme={theme}
@@ -124,20 +124,7 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
                 )}
               </CustomStackFullWidth>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={12}
-              md={6}
-              align="right"
-              // sx={{
-              // 	"&:hover": {
-              // 		"img, svg": {
-              // 			transform: "scale(1.1)",
-              // 		},
-              // 	},
-              // }}
-            >
+            <Grid item xs={12} sm={12} md={6} align="right">
               <DeliveryImage />
             </Grid>
           </Grid>
@@ -150,6 +137,3 @@ const ComponentOne = ({ landingPageData, configData, handleOrderNow }) => {
 ComponentOne.propTypes = {};
 
 export default ComponentOne;
-
-// height="550px"
-// width="550px"

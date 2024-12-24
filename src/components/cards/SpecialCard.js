@@ -1,9 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import { Grid, Tooltip, Typography } from "@mui/material";
 import { Box, Stack, styled } from "@mui/system";
 import { t } from "i18next";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
@@ -79,7 +78,6 @@ export const FoodHalalHaram = ({ position, width }) => {
 const SpecialCard = (props) => {
   const {
     item,
-    imageBaseUrl,
     quickViewHandleClick,
     addToCart,
     handleBadge,
@@ -87,20 +85,16 @@ const SpecialCard = (props) => {
     handleIncrement,
     handleDecrement,
     count,
-    showAddtocart,
     handleClick,
     updateLoading,
     setOpenLocationAlert,
     isLoading,
     noRecommended,
+    configData,
   } = props;
-
-  const { configData } = useSelector((state) => state.configData);
 
   const classes = textWithEllipsis();
   const [isHover, setIsHover] = useState(false);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const getModuleWiseItemName = () => {
     if (getCurrentModuleType() === ModuleTypes.FOOD) {
@@ -113,16 +107,14 @@ const SpecialCard = (props) => {
               fontWeight="500"
               width={0}
               flexGrow={1}
+              component="h3"
             >
               {item?.name}
             </Typography>
           </PrimaryToolTip>
-          <FoodVegNonVegFlag veg={item?.veg == 0 ? false : true} />
-          {/*{item?.halal_tag_status && item?.is_halal ? (*/}
-          {/*	<FoodHalalHaram />*/}
-          {/*) : (*/}
-          {/*	""*/}
-          {/*)}*/}
+          {configData?.configData?.toggle_veg_non_veg ? (
+            <FoodVegNonVegFlag veg={item?.veg == 0 ? false : true} />
+          ) : null}
         </Stack>
       );
     } else {
@@ -132,6 +124,7 @@ const SpecialCard = (props) => {
             className={classes.singleLineEllipsis}
             fontSize={{ xs: "12px", md: "14px" }}
             fontWeight="500"
+            component="h3"
           >
             {item?.name}
           </Typography>
@@ -146,10 +139,6 @@ const SpecialCard = (props) => {
         padding: "10px",
         cursor: "pointer",
         background: (theme) => theme.palette.neutral[100],
-        // boxShadow: (theme) =>
-        // 	theme.palette.mode !== "dark"
-        // 		? "0px 30px 20px 0px rgba(0, 0, 0, 0.10)"
-        // 		: "0px 30px 20px 0px rgba(88, 110, 125, 0.10)",
         borderRadius: "10px",
         width: { xs: "auto", md: "230px" },
         height: "100%",
@@ -177,7 +166,6 @@ const SpecialCard = (props) => {
         <Box borderRadius="8px" overflow="hidden" height="100%">
           <CustomImageContainer
             src={item?.image_full_url}
-            // alt={item?.title}
             height="100%"
             width="100%"
             objectfit="cover"
@@ -192,12 +180,8 @@ const SpecialCard = (props) => {
         <CustomOverLay hover={isHover}>
           <QuickView
             quickViewHandleClick={quickViewHandleClick}
-            // item={item}
             isHover={isHover}
             noWishlist
-            // addToWishlistHandler={addToWishlistHandler}
-            // removeFromWishlistHandler={removeFromWishlistHandler}
-            // isWishlisted={isWishlisted}
             isProductExist={isProductExist}
             addToCartHandler={addToCart}
             showAddtocart={!isProductExist}
@@ -227,14 +211,10 @@ const SpecialCard = (props) => {
             />
           </Box>
         </CustomOverLay>
-        {/*<ImageBottomBox*/}
-        {/*  delivery_time={item?.delivery_time}*/}
-        {/*  free_delivery={item?.free_delivery}*/}
-        {/*/>*/}
       </CustomStackFullWidth>
       <CustomStackFullWidth mt="15px" sx={{ padding: "5px" }} spacing={0.5}>
         {getModuleWiseItemName()}
-        <Body2 text={item?.store_name} />
+        <Body2 text={item?.store_name} component="h4" />
       </CustomStackFullWidth>
       <CustomBoxFullWidth sx={{ padding: "0px 5px 5px 5px" }}>
         <Grid container>

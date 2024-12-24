@@ -1,15 +1,7 @@
-import {
-  Grid,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import React from "react";
+import { Stack, Typography, useMediaQuery } from "@mui/material";
 import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
 import CustomImageContainer from "../../CustomImageContainer";
 import CustomButtonComponent from "./CustomButtonComponent";
-import { getHeaderImageUrl } from "utils/CustomFunctions";
 
 const LargerScreen = (props) => {
   const { landingPageData, goToApp, t } = props;
@@ -21,15 +13,16 @@ const LargerScreen = (props) => {
       <Stack
         alignItems="center"
         justifyContent="center"
-        height={isUpSmall ? "300px" : "543px"}
+        height={isUpSmall ? "300px" : "500px"}
       >
-        <CustomStackFullWidth spacing={4}>
+        <CustomStackFullWidth spacing={4} sx={{ paddingInlineStart: "2rem" }}>
           <CustomStackFullWidth spacing={1}>
             <Typography
               variant="h4"
               color="primary.deep"
               fontWeight={800}
               fontSize={{ xs: "16px", sm: "22px", md: "36px" }}
+              component="h2"
             >
               {landingPageData?.business_title}
             </Typography>
@@ -38,6 +31,7 @@ const LargerScreen = (props) => {
               color="primary.main"
               fontWeight={700}
               fontSize={{ xs: "14px", sm: "28px", md: "30px" }}
+              component="h3"
             >
               {landingPageData?.business_sub_title}
             </Typography>
@@ -119,6 +113,8 @@ const LargerScreen = (props) => {
           objectfit="cover"
           // height="100%"
           // width="100%"
+          aspectRatio="500/500"
+          maxWidth="500px"
         />
       </Stack>
     </>

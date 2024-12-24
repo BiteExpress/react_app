@@ -1,14 +1,13 @@
-import React from "react";
-import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
 import { alpha, useMediaQuery, useTheme } from "@mui/material";
-import { CustomBoxFullWidth } from "../../../styled-components/CustomStyles.style";
-import CustomImageContainer from "../../CustomImageContainer";
 import { Box } from "@mui/system";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { ModuleTypes } from "helper-functions/moduleTypes";
+import { CustomBoxFullWidth } from "styled-components/CustomStyles.style";
+import CustomImageContainer from "../../CustomImageContainer";
 import banner from "../assets/banner.png";
-import pharmacy from "../assets/par.png";
 import rcommerceSearchBg from "../assets/ecommerce_top_bg.png";
 import foodBanner from "../assets/food.png";
-import { ModuleTypes } from "../../../helper-functions/moduleTypes";
+import pharmacy from "../assets/par.png";
 import parcelImage from "../assets/parcelBg.png";
 
 const TopBanner = () => {
@@ -45,8 +44,6 @@ const TopBanner = () => {
       case ModuleTypes.PARCEL:
         return parcelImage.src;
 
-      // case "food":
-      //   return theme.palette.warning.lite;
       default:
         return "inherit";
     }

@@ -18,12 +18,12 @@ import CustomImageContainer from "../../CustomImageContainer";
 import CustomRatingBox from "../../CustomRatingBox";
 import { FoodHalalHaram, FoodVegNonVegFlag } from "../../cards/SpecialCard";
 import NotAvailableCard from "./NotAvailableCard";
+import React from "react";
 
 const FoodDetailsManager = (props) => {
   const {
     configData,
     handleDiscountChip,
-    image,
     modalData,
     product,
     t,
@@ -32,7 +32,7 @@ const FoodDetailsManager = (props) => {
     removeFromWishlistHandler,
     isWishlisted,
     theme,
-    imageBaseUrl,
+
     handleRouteToStore,
   } = props;
 
@@ -124,7 +124,8 @@ const FoodDetailsManager = (props) => {
                 {modalData.length > 0 && modalData[0].name}
               </Typography>
               {modalData.length > 0 &&
-                modalData[0]?.module?.module_type === "food" && (
+                modalData[0]?.module?.module_type === "food" &&
+                configData?.toggle_veg_non_veg && (
                   <FoodVegNonVegFlag
                     veg={modalData[0]?.veg === 0 ? "false" : "true"}
                   />
@@ -136,6 +137,17 @@ const FoodDetailsManager = (props) => {
               )}
             </CustomStackFullWidth>
           </CustomStackFullWidth>
+          {modalData[0]?.generic_name[0] && (
+            <Typography
+              fontSize={{ xs: "12px", sm: "12px" }}
+              fontWeight="400"
+              color="customColor.textGray"
+              component="h2"
+              mb="5px"
+            >
+              {modalData[0]?.generic_name[0]}.
+            </Typography>
+          )}
           <FoodSubTitleTypography
             color={theme.palette.neutral[400]}
             sx={{
@@ -145,6 +157,7 @@ const FoodDetailsManager = (props) => {
           >
             {modalData.length > 0 && modalData[0].description}
           </FoodSubTitleTypography>
+
           {modalData[0]?.nutritions_name?.length > 0 && (
             <>
               <Typography fontSize="14px" fontWeight="500" mt="5px">

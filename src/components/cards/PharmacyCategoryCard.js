@@ -1,9 +1,9 @@
 import { Skeleton, styled, Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { getModuleId } from "helper-functions/getModuleId";
 import { btoa } from "next/dist/compiled/@edge-runtime/primitives/encoding";
 import Link from "next/link";
-import React, { useState } from "react";
-import { getModuleId } from "helper-functions/getModuleId";
+import { useState } from "react";
 import { textWithEllipsis } from "styled-components/TextWithEllipsis";
 import CustomImageContainer from "../CustomImageContainer";
 
@@ -33,6 +33,7 @@ const Wrapper = styled(Box)(({ theme }) => ({
 const ImageWrapper = styled(Box)(({ theme }) => ({
   position: "relative",
   borderRadius: "60px 60px 0px 0px",
+
   [theme.breakpoints.down("md")]: {
     height: "80px",
   },
@@ -96,6 +97,7 @@ const PharmacyCategoryCard = (props) => {
                 width="100%"
                 borderRadius="60px 60px 0px 0px"
                 objectFit="cover"
+                loading="loading"
               />
             </ImageWrapper>
             <Tooltip
@@ -120,6 +122,7 @@ const PharmacyCategoryCard = (props) => {
                   maxHeight="20px"
                   color={hover && "primary.main"}
                   noWrap
+                  component="h4"
                 >
                   {title}
                 </Typography>

@@ -1,28 +1,27 @@
 import { Grid, Skeleton, useMediaQuery, useTheme } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import { Stack } from "@mui/system";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import useGetMostReviewed from "../../../api-manage/hooks/react-query/useGetMostReviewed";
-import { getCurrentModuleType } from "../../../helper-functions/getCurrentModuleType";
-import { ModuleTypes } from "../../../helper-functions/moduleTypes";
-import { setBestReviewedItems } from "../../../redux/slices/storedData";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { ModuleTypes } from "helper-functions/moduleTypes";
+import { setBestReviewedItems } from "redux/slices/storedData";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
   SliderCustom,
-} from "../../../styled-components/CustomStyles.style";
+} from "styled-components/CustomStyles.style";
 import ProductCard from "../../cards/ProductCard";
+import CustomImageContainer from "../../CustomImageContainer";
+import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
 import H2 from "../../typographies/H2";
 import { HomeComponentsWrapper } from "../HomePageComponents";
+import { loveItemSettings } from "../love-item/loveItemSettings";
 import Menus from "./Menus";
 import { NextFood, PrevFood } from "./SliderSettings";
-import { Stack } from "@mui/system";
-import CustomImageContainer from "../../CustomImageContainer";
-import { loveItemSettings } from "../love-item/loveItemSettings";
-import ProductCardSimmer from "../../Shimmer/ProductCardSimmer";
-import { getHomePageBannerImageUrl } from "utils/CustomFunctions";
 
 const BestReviewedItems = (props) => {
   const { title, info, bannerIsLoading } = props;
@@ -40,6 +39,7 @@ const BestReviewedItems = (props) => {
     refetch,
     isRefetching: itemIsLoading,
     isLoading,
+    isFetching,
   } = useGetMostReviewed({ type: "all" });
   const { bestReviewedItems } = useSelector((state) => state.storedData);
   const dispatch = useDispatch();
@@ -255,7 +255,7 @@ const BestReviewedItems = (props) => {
                 mt="30px"
                 spacing={1}
               >
-                <H2 text={title} textAlign="left" />
+                <H2 text={title} textAlign="left" component="h2" />
                 <CustomBoxFullWidth>
                   <Grid
                     container
@@ -273,9 +273,14 @@ const BestReviewedItems = (props) => {
                               md: "352px",
                             },
                             margin: "10px",
-                            display: { xs: "none", md: "inherit" },
+                            display: {
+                              xs: "none",
+                              md: "inherit",
+                            },
                             "&:hover": {
-                              img: { transform: "scale(1.05)" },
+                              img: {
+                                transform: "scale(1.05)",
+                              },
                             },
                           }}
                         >
@@ -330,7 +335,7 @@ const BestReviewedItems = (props) => {
         </HomeComponentsWrapper>
       ) : (
         <>
-          {isLoading ? (
+          {isFetching ? (
             <CustomStackFullWidth spacing={1}>
               <Skeleton width="200px" />
 
@@ -351,7 +356,7 @@ const BestReviewedItems = (props) => {
                     alignItems="center"
                     justifyContent="space-between"
                   >
-                    <H2 text={title} />
+                    <H2 text={title} component="h2" />
                     <Stack
                       maxWidth="960px"
                       width={isSmall ? "initial" : "100%"}
@@ -377,9 +382,14 @@ const BestReviewedItems = (props) => {
                               md: "352px",
                             },
                             paddingTop: "8px",
-                            display: { xs: "none", sm: "inherit" },
+                            display: {
+                              xs: "none",
+                              sm: "inherit",
+                            },
                             "&:hover": {
-                              img: { transform: "scale(1.03)" },
+                              img: {
+                                transform: "scale(1.03)",
+                              },
                             },
                           }}
                         >
@@ -417,7 +427,6 @@ const BestReviewedItems = (props) => {
                               ref={SliderRef}
                               {...bestReviewedSliderSettings}
                             >
-                              {/* <Slider ref={SliderRef} {...settings}> */}
                               {slides()}
                             </Slider>
                           </SliderCustom>

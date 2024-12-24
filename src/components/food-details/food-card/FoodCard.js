@@ -17,14 +17,10 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import FoodDetailModal from "../foodDetail-modal/FoodDetailModal";
 import ProductCardMedia from "./ProductCardMedia";
-import { getAmount, isAvailable } from "../../utils/customFunctions";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment/moment";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { CustomOverlayBox } from "../../styled-components/CustomStyles.style";
 import IconButton from "@mui/material/IconButton";
 import { toast } from "react-hot-toast";
 import StartPriceView from "../foodDetail-modal/StartPriceView";
@@ -214,20 +210,6 @@ const FoodCard = ({ product, productImageUrl }) => {
           )}
         </StyledButton>
       </CustomFoodCard>
-      {/*{openModal && (*/}
-      {/*    <RTL direction={language_direction}>*/}
-      {/*        <FoodDetailModal*/}
-      {/*            product={product}*/}
-      {/*            image={imageUrl}*/}
-      {/*            open={openModal}*/}
-      {/*            handleModalClose={handleModalClose}*/}
-      {/*            setOpen={setOpenModal}*/}
-      {/*            currencySymbolDirection={currencySymbolDirection}*/}
-      {/*            currencySymbol={currencySymbol}*/}
-      {/*            digitAfterDecimalPoint={digitAfterDecimalPoint}*/}
-      {/*        />*/}
-      {/*    </RTL>*/}
-      {/*)}*/}
     </>
   );
 };

@@ -7,12 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomImageContainer from "../../../CustomImageContainer";
 
+import { getModuleId } from "helper-functions/getModuleId";
 import { btoa } from "next/dist/compiled/@edge-runtime/primitives/encoding";
 import Link from "next/link";
-import { getModuleId } from "helper-functions/getModuleId";
 import { CustomBoxFullWidth } from "styled-components/CustomStyles.style";
 import { textWithEllipsis } from "styled-components/TextWithEllipsis";
 
@@ -100,11 +100,9 @@ const FeaturedItemCard = (props) => {
               height: { xs: "130px", md: "155px" },
               width: { xs: "100px", md: "124px" },
               backgroundColor: (theme) => theme.palette.background.paper,
-              // padding: ".5rem",
               border: (theme) =>
                 `1.5px solid ${alpha(theme.palette.neutral[400], 0.2)}`,
               borderRadius: "10px",
-              // margin: "10px",
               "&:hover": {
                 boxShadow: "0px 10px 20px 0px rgba(88, 110, 125, 0.10)",
                 border: "0px",
@@ -131,6 +129,7 @@ const FeaturedItemCard = (props) => {
                 height="100%"
                 width="100%"
                 objectFit="cover"
+                loading="loading"
               />
             </Stack>
             <Tooltip
@@ -155,6 +154,7 @@ const FeaturedItemCard = (props) => {
                   className={classes.singleLineEllipsis}
                   maxHeight="20px"
                   color={hover && "primary.main"}
+                  component="h4"
                 >
                   {title}
                 </Typography>

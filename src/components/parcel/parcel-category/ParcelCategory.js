@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { CustomStackFullWidth } from "../../../styled-components/CustomStyles.style";
+import { useTheme } from "@emotion/react";
+import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
+import { t } from "i18next";
+import { useEffect } from "react";
+import useGetParcelCategory from "../../../api-manage/hooks/react-query/percel/usePercelCategory";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import H1 from "../../typographies/H1";
 import ParcelCategoryCard from "./ParcelCategoryCard";
-import { Grid, Typography } from "@mui/material";
-import useGetParcelCategory from "../../../api-manage/hooks/react-query/percel/usePercelCategory";
 import ParcelCategoryShimmer from "./ParcelCategoryShimmer";
-import { t } from "i18next";
-import { useTheme } from "@emotion/react";
 
 const ParcelCategory = () => {
   const theme = useTheme();
@@ -25,7 +25,7 @@ const ParcelCategory = () => {
       }}
     >
       <Stack justifyContent="center" spacing={{ xs: 1, md: 0 }}>
-        <H1 text="We Deliver Everything" />
+        <H1 text="We Deliver Everything" component="h2" />
         <Typography
           textAlign="center"
           color={theme.palette.neutral[400]}

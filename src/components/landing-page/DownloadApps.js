@@ -1,25 +1,21 @@
-import React from "react";
-import { CustomStackFullWidth } from "../../styled-components/CustomStyles.style";
-import { useTranslation } from "react-i18next";
-import AppLinks from "../footer/footer-middle/AppLinks";
-import { alpha, styled, Typography } from "@mui/material";
+import { alpha, Typography } from "@mui/material";
+import { CustomStackFullWidth } from "styled-components/CustomStyles.style";
 import DollarSignHighlighter from "../DollarSignHighlighter";
+import AppLinks from "../footer/footer-middle/AppLinks";
 
-const HighLightedText = styled("span")(({ theme }) => ({
-  color: theme.palette.primary.main,
-}));
 const DownloadApps = ({ theme, isSmall, landingPageData }) => {
-  const { t } = useTranslation();
   return (
     <CustomStackFullWidth
       alignItems={isSmall ? "center" : "flex-start"}
       justifyContent="center"
       gap={{ xs: "10px", sm: "15px" }}
+      paddingBottom={{ xs: "20px", md: "0px" }}
     >
       <Typography
         textAlign="flex-start"
         fontSize={isSmall ? "14px" : "26px"}
         fontWeight={600}
+        component="h2"
       >
         <DollarSignHighlighter
           theme={theme}

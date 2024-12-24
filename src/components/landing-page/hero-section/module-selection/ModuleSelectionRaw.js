@@ -1,21 +1,22 @@
 import { Typography, alpha, styled, useTheme } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
-import { getCurrentModuleType } from "../../../../helper-functions/getCurrentModuleType";
-import { setSelectedModule } from "../../../../redux/slices/utils";
+import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
+import { setSelectedModule } from "redux/slices/utils";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
   SliderCustom,
-} from "../../../../styled-components/CustomStyles.style";
-import { IsSmallScreen } from "../../../../utils/CommonValues";
+} from "styled-components/CustomStyles.style";
+import { IsSmallScreen } from "utils/CommonValues";
 import CustomImageContainer from "../../../CustomImageContainer";
 import { settings } from "./sliderSettings";
-import { getImageUrl } from "utils/CustomFunctions";
+import useGetModule from "api-manage/hooks/react-query/useGetModule";
+import { setModules } from "redux/slices/configData";
 
 const CardWrapper = styled(Stack)(({ theme, bg_change }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -55,6 +56,7 @@ const Card = ({ item, configData, isSelected, handleClick }) => {
           cursor: "pointer",
         }}
         variant={IsSmallScreen() ? "h7" : "h6"}
+        component="h3"
       >
         {item?.module_name}
       </Typography>
@@ -120,10 +122,21 @@ const Card = ({ item, configData, isSelected, handleClick }) => {
 
 const ModuleSelectionRaw = (props) => {
   const { isSmall } = props;
+  const dispatch = useDispatch();
   const { modules, configData } = useSelector((state) => state.configData);
   const [isSelected, setIsSelected] = useState(getCurrentModuleType());
+  const { data, refetch } = useGetModule();
+  useEffect(() => {
+    refetch();
+  }, []);
+  useEffect(() => {
+    if (data) {
+      dispatch(setModules(data));
+    }
+  }, [data]);
+
   const router = useRouter();
-  const dispatch = useDispatch();
+
   const handleClick = (item) => {
     setIsSelected(item?.module_type);
     dispatch(setSelectedModule(item));

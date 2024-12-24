@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import ArrowForwardSharpIcon from "@mui/icons-material/ArrowForwardSharp";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import StarIcon from "@mui/icons-material/Star";
 import {
   alpha,
   IconButton,
@@ -6,24 +8,20 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import ArrowForwardSharpIcon from "@mui/icons-material/ArrowForwardSharp";
 import { Box, Stack } from "@mui/system";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import StarIcon from "@mui/icons-material/Star";
-// import {theme} from "../../../theme";
+import { useEffect, useState } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
+import { useAddStoreToWishlist } from "api-manage/hooks/react-query/wish-list/useAddStoreToWishLists";
+import { useWishListStoreDelete } from "api-manage/hooks/react-query/wish-list/useWishListStoreDelete";
 import CustomImageContainer from "components/CustomImageContainer";
 import VideoPlayerWithCenteredControl from "components/home/paid-ads/VideoPlayerWithCenteredControl";
 import { getCurrentModuleType } from "helper-functions/getCurrentModuleType";
-import { useDispatch, useSelector } from "react-redux";
-import { useAddStoreToWishlist } from "api-manage/hooks/react-query/wish-list/useAddStoreToWishLists";
-import { useWishListStoreDelete } from "api-manage/hooks/react-query/wish-list/useWishListStoreDelete";
-import { addWishListStore, removeWishListStore } from "redux/slices/wishList";
-import toast from "react-hot-toast";
-import { not_logged_in_message } from "utils/toasterMessages";
 import { t } from "i18next";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { addWishListStore, removeWishListStore } from "redux/slices/wishList";
+import { not_logged_in_message } from "utils/toasterMessages";
 
 const AdsCard = (props) => {
   const {
@@ -315,6 +313,7 @@ const AdsCard = (props) => {
                   color={theme.palette.neutral[1000]}
                   fontSize={{ xs: "16px", sm: "18px", md: "20px" }}
                   fontWeight="600"
+                  component="h3"
                 >
                   {item?.title}
                 </Typography>

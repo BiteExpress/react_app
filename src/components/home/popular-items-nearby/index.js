@@ -1,38 +1,37 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useGetPopularItemsNearby from "../../../api-manage/hooks/react-query/useGetPopularItemsNearby";
 
 import { Grid, Skeleton } from "@mui/material";
 import Slider from "react-slick";
-import { settings } from "./SliderSettings";
 
 import { useTranslation } from "react-i18next";
 
-import ProductCard from "../../cards/ProductCard";
-import H2 from "../../typographies/H2";
-import Subtitle1 from "../../typographies/Subtitle1";
-import { HomeComponentsWrapper } from "../HomePageComponents";
-import ItemsCampaign from "./items-campaign-slide";
-import ProductCardSimmerHorizontal from "../../Shimmer/ProductCardSimmerHorizontal";
-import CampaignSimmerTimmer from "../../Shimmer/CampaignSimmerTimmer";
+import { useGetFlashSales } from "api-manage/hooks/react-query/useGetFlashSales";
+import { getLanguage } from "helper-functions/getLanguage";
+import { setPopularItemsNearby } from "redux/slices/storedData";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { setPopularItemsNearby } from "redux/slices/storedData";
 import {
   CustomBoxFullWidth,
   CustomStackFullWidth,
   SliderCustom,
 } from "styled-components/CustomStyles.style";
+import ProductCard from "../../cards/ProductCard";
+import CampaignSimmerTimmer from "../../Shimmer/CampaignSimmerTimmer";
+import ProductCardSimmerHorizontal from "../../Shimmer/ProductCardSimmerHorizontal";
+import H2 from "../../typographies/H2";
+import Subtitle1 from "../../typographies/Subtitle1";
 import { NextFood, PrevFood } from "../best-reviewed-items/SliderSettings";
-import { useGetFlashSales } from "api-manage/hooks/react-query/useGetFlashSales";
-import { getLanguage } from "helper-functions/getLanguage";
+import { HomeComponentsWrapper } from "../HomePageComponents";
+import ItemsCampaign from "./items-campaign-slide";
 
 const PopularItemsNearby = ({ title, subTitle }) => {
   const { popularItemsNearby } = useSelector((state) => state.storedData);
   const { t } = useTranslation();
   const limit = 2;
   const offset = 1;
-  const { data, refetch, isLoading } = useGetPopularItemsNearby({
+  const { data, refetch, isLoading, isFetching } = useGetPopularItemsNearby({
     offset: 1,
     type: "all",
   });
@@ -41,8 +40,6 @@ const PopularItemsNearby = ({ title, subTitle }) => {
     refetch: flashSalesRefetch,
     isLoading: flashSalesIsLoading,
   } = useGetFlashSales({ limit, offset });
-  // const direction = JSON.parse(localStorage.getItem("settings"));
-
   const dispatch = useDispatch();
   useEffect(() => {
     if (popularItemsNearby.products.length === 0) {
@@ -173,19 +170,19 @@ const PopularItemsNearby = ({ title, subTitle }) => {
             mt={{ xs: "10x", md: "16px" }}
             spacing={1}
           >
-            {isLoading ? (
+            {isFetching ? (
               <Skeleton varient="text" width="110px" />
             ) : (
-              <H2 text={title} />
+              <H2 text={title} component="h2" />
             )}
-            {isLoading ? (
+            {isFetching ? (
               <Skeleton varient="text" width="310px" />
             ) : (
-              <Subtitle1 text={t(subTitle)} />
+              <Subtitle1 text={t(subTitle)} component="p" />
             )}
             <CustomBoxFullWidth>
               <Grid container spacing={2} sx={{ marginTop: "1px" }}>
-                {isLoading ? (
+                {isFetching ? (
                   <Grid item xs={12} sm={12} md={9}>
                     <SliderCustom
                       nopadding="true"
